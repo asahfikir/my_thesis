@@ -1,0 +1,155 @@
+\chapter{Tinjauan Pustaka}
+
+\section{Landasan Teori}
+\subsection{\textit{Large Language Models (LLM)}}
+
+\textit{Large Language Models (LLM)} adalah jenis model kecerdasan buatan (AI) yang dirancang untuk memahami, meringkas, menghasilkan, dan memprediksi teks bahasa alami. LLM diklasifikasikan sebagai model yang memiliki jumlah parameter yang sangat besar, mencapai miliaran atau bahkan triliunan. Perbedaan utama antara \textit{LLM} dengan model bahasa sebelumnya terletak pada kemampuan generalization (generalisasi). Seperti yang dijelaskan oleh Brown et al. (2020) dalam penelitian mengenai \textit{GPT-3}, model dengan skala yang sangat besar menunjukkan kemampuan emergent properties, di mana model mampu melakukan tugas yang tidak secara eksplisit diajarkan selama pelatihan, seperti \textit{few-shot learning}, penalaran logis, dan terjemahan bahasa, hanya dengan diberikan beberapa contoh (\textit{prompts}).
+
+Cara kerja \textit{LLM} berlandaskan pada arsitektur \textit{Transformer}, yang diperkenalkan oleh \cite{vaswani2023attentionneed} Inti dari arsitektur ini adalah mekanisme \textit{Self-Attention}, yang memungkinkan model untuk memperhatikan bagian-bagian penting dari kalimat secara simultan dan memahami hubungan konteks antar kata, meskipun jarak antar kata tersebut sangat jauh.
+
+Proses kerja \textit{LLM} umumnya dibagi menjadi dua tahap utama:
+
+\begin{itemize}
+    \item \textit{Pre-training:} Pada tahap ini, model dilatih menggunakan kumpulan data teks yang sangat besar tanpa label (\textit{unsupervised learning}). Tujuannya adalah mempelajari probabilitas kemunculan kata berikutnya dalam sebuah urutan (\textit{next token prediction}). Model mempelajari tata bahasa, fakta umum, dan penalaran dasar dari pola statistik dalam data (Brown et al., 2020).
+    \item \textit{Fine-tuning (dan RLHF):} Setelah \textit{pre-training}, model kemudian disempurnakan melalui fine-tuning menggunakan dataset yang lebih kecil namun berkualitas tinggi yang disusun oleh manusia (\textit{instruction tuning}). Seringkali, metode \textit{Reinforcement Learning from Human Feedback (RLHF)} digunakan untuk menyelaraskan output model agar lebih sesuai dengan preferensi manusia, aman, dan bermanfaat (Ouyang et al., 2022).
+\end{itemize}
+
+Secara garis besar, ketika pengguna memberikan input (\textit{prompt}), \textit{LLM} menghitung probabilitas distribusi untuk token (kata atau bagian kata) berikutnya berdasarkan konteks yang telah diberikan sebelumnya, lalu memilih token dengan probabilitas tertinggi untuk membentuk respons.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/howllmworks.png}
+    \caption{Bagaimana LLM bekerja}
+\end{figure}
+
+\subsection{Small Language Models (SLM)}
+Seiring dengan keberhasilan \textit{LLM}, tantangan mengenai biaya komputasi, latensi, dan konsumsi energi mulai bermuncul. Di sinilah konsep \textit{Small Language Models (SLM)} menjadi relevan. \textit{SLM} adalah model bahasa dengan jumlah parameter yang jauh lebih kecil (biasanya di bawah 7 miliar parameter) yang dirancang untuk berjalan efisien pada perangkat keras terbatas, seperti smartphone atau edge devices.
+
+Meskipun memiliki kapasitas penyimpanan pengetahuan yang lebih sedikit dibandingkan \textit{LLM}, \textit{SLM} sering kali dilatih dengan data berkualitas tinggi dan teknik distilasi (\textit{knowledge distillation}) untuk mencapai performa yang kompetitif pada tugas-tugas spesifik (Rae et al., 2021; Gupta et al., 2023). Penggunaan \textit{SLM} menjadi solusi utama bagi organisasi yang membutuhkan privasi data dan efisiensi biaya tanpa harus mengorbankan seluruh performa AI.
+
+\textit{Microsoft Phi-2 (2.7B)}: Dikenal dengan arsitektur yang padat pengetahuan (\textit{dense knowledge}) meskipun ukurannya kecil.
+\textit{Google Gemma-2B}: Model terbuka dari Google yang menyeimbangkan kinerja dan efisiensi memori.
+\textit{Meta LLaMA 3.2 (1B \& 3B)}: Generasi terbaru dari \textit{LLaMA} yang dioptimalkan untuk perangkat edge dengan context window yang diperbarui.
+
+
+\subsection{Retrieval-Augmented Generation (RAG) dan Chunking Strategies}
+\textit{RAG} menggabungkan kemampuan generatif model dengan basis pengetahuan eksternal.
+
+\textit{Fixed-size Chunking}: Metode memecah dokumen berdasarkan jumlah \textit{token} tetap.
+\textit{Sliding Window (Overlap)}: Teknik di mana \textit{chunk} berikutnya mengambil sebagian teks dari chunk sebelumnya untuk mencegah pemutusan informasi penting di batas potongan.
+
+\subsection{Metrik Evaluasi Large Language Models}
+
+Mengukur performa LLM merupakan tantangan tersendiri karena sifatnya yang generatif dan terbuka. Metrik evaluasi dapat dibagi menjadi:
+
+\begin{enumerate}
+    \item Metrik Otomatis (Intrinsic \& Extrinsic):
+        \begin{enumerate}
+            % \item \textit{Perplexity (PPL):} Metrik ini mengukur seberapa "terkejut" model ketika melihat teks baru. Semakin rendah nilai perplexity, semakin baik model dalam memprediksi urutan kata tersebut (Jelinek et al., 1977).
+            \item \textit{BLEU (Bilingual Evaluation Understudy):} Awalnya digunakan untuk penerjemahan mesin, BLEU mengukur kesamaan \textit{n-gram} (urutan kata) antara teks yang dihasilkan model dan teks referensi (Papineni et al., 2002).
+            \item \textit{ROUGE (Recall-Oriented Understudy for Gisting Evaluation):} Sering digunakan untuk tugas ringkasan teks, \textit{ROUGE} mengukur recall dengan membandingkan bagian-bagian teks yang dihasilkan dengan teks referensi (Lin, 2004).
+            \item \textit{Cosine Similarity}: Pengukuran kesamaan semantik berbasis vektor (\textit{embedding}). Digunakan untuk menilai apakah makna jawaban mirip dengan \textit{ground truth}, meskipun kata-katanya berbeda.
+        \end{enumerate}
+    \item Benchmark Berbasis Tugas (\textit{NLP Tasks}): Untuk menguji kemampuan penalaran dan bahasa, \textit{LLM} sering diuji menggunakan standar benchmark seperti \textit{MMLU (Massive Multitask Language Understanding)} yang mencakup berbagai subjek akademik (Hendrycks et al., 2021).
+    \item Evaluasi Berbasis Manusia (Human Evaluation):
+    Karena metrik otomatis sering gagal menangkap nuansa makna dan kebenaran faktual (\textit{hallucination}), evaluasi oleh manusia tetap menjadi standar yang dilakukan untuk menguji kehandalan sebuah AI Model.
+\end{enumerate}
+
+\subsection{Research Gap}
+
+Perkembangan model bahasa besar (\textit{LLM}) telah bergeser ke arah penggunaan model bahasa kecil (\textit{SLM}) yang lebih efisien untuk domain tertutup, seperti pada tugas klasifikasi medis, deteksi kepribadian, maupun penggunaan alat (\textit{tool learning})\cite{shen2024small}. Meskipun model-model seperti \textit{Cendol} \cite{cahyawijaya2024cendol} dan \textit{SEA-LION} \cite{ng2025sealion} telah meningkatkan kemampuan bahasa Indonesia dan bahasa daerah secara signifikan melalui \textit{instruction tuning} dan \textit{continued pre-training}, performa model tersebut masih sangat bergantung pada cara informasi disajikan dalam jendela konteks.
+
+Terdapat tiga kesenjangan utama yang menjadi dasar penelitian ini:
+\begin{enumerate}
+    \item Fenomena "\textit{Lost in the Middle}" dan Bias Posisi: Penelitian oleh \cite{liu2023lost} menunjukkan bahwa performa LLM menurun drastis ketika informasi relevan berada di tengah konteks panjang (kurva U), sebuah fenomena yang juga ditemukan pada model yang telah menjalani fine-tuning. Dalam sistem Retrieval-Augmented Generation (RAG), hal ini berarti pemilihan panjang chunk (potongan teks) menjadi krusial agar informasi penting tidak "tenggelam" di tengah konteks yang diberikan kepada SLM yang memiliki kapasitas penalaran lebih terbatas dibandingkan model besar seperti \textit{GPT-4}.
+    \item Keterbatasan \textit{SLM} dalam Memproses Konteks Panjang: Walaupun \textit{SLM} dapat ditingkatkan kemampuannya melalui distilasi pengetahuan (\textit{knowledge distillation}), model-model kecil ini tetap menunjukkan kesulitan dalam mengekstraksi kalimat krusial dari konteks yang sangat panjang. Saat ini, penelitian RAG pada SLM untuk domain spesifik telah menunjukkan akurasi tinggi, namun belum ada analisis mendalam mengenai bagaimana optimasi teknis seperti panjang chunk dan overlap (tumpang tindih antar potongan teks) dapat memitigasi kelemahan SLM dalam menangkap hubungan semantik yang kompleks.\cite{liu2023lostmiddlelanguagemodels} \cite{lee2024logic}
+    \item Konteks Linguistik dan Dokumen Publik Indonesia: Sumber literatur menunjukkan adanya kekurangan korpus dan data evaluasi yang bersumber langsung dari konteks lokal Indonesia. Dokumen publik berbahasa Indonesia sering kali memiliki struktur formal yang panjang dan berbelit. Penggunaan panjang chunk yang tidak tepat berisiko memotong informasi penting, sementara overlap yang tidak optimal dapat menyebabkan hilangnya koherensi antarkonteks yang diperlukan model untuk memberikan jawaban akurat.\cite{cahyawijaya2024cendol} \cite{es2023ragas}
+\end{enumerate}
+
+Berdasarkan tinjauan tersebut, terdapat kesenjangan yang jelas antara pengembangan model bahasa Indonesia (seperti SEA-LION dan Cendol) dengan strategi implementasi teknis RAG yang efisien bagi SLM. Belum banyak penelitian yang secara spesifik menguji bagaimana variasi panjang chunk dan tingkat overlap memengaruhi akurasi jawaban pada dokumen publik Indonesia. Penelitian ini bertujuan mengisi celah tersebut dengan memberikan rekomendasi teknis untuk meningkatkan reliabilitas SLM dalam melayani kebutuhan informasi publik secara akurat dan efisien.
+
+Dapat kita simpulkan bahwa sebagian besar penelitian sebelumnya:
+\begin{itemize}
+\item berfokus pada \textit{LLM} besar,
+\item menggunakan dokumen bahasa Inggris,
+\item tidak mengevaluasi \textit{chunk} dan \textit{overlap} secara sistematis.
+\end{itemize}
+
+\begin{landscape}
+
+    \begin{longtable}{@{} c P{3.5cm} c P{4cm} P{4cm} P{4cm} P{4cm} @{}}
+    \caption{Tabel Perbandingan Penelitian Terdahulu}\label{tab:literature_review}\\
+    \toprule
+    \textbf{No} & \textbf{Judul} & \textbf{Tahun} & \textbf{Metode} & \textbf{Temuan} & \textbf{Keterbatasan} & \textbf{Gap} \\
+    \midrule
+    \endfirsthead
+
+    \toprule
+    \textbf{No} & \textbf{Judul} & \textbf{Tahun} & \textbf{Metode} & \textbf{Temuan} & \textbf{Keterbatasan} & \textbf{Gap} \\
+    \midrule
+    \endhead
+
+    \midrule
+    \multicolumn{7}{r}{\textit{Lanjutan pada halaman berikutnya}}\\
+    \bottomrule
+    \endfoot
+    \bottomrule
+    \endlastfoot
+
+    1 & Small LLMs Are Weak Tool Learners \cite{shen2024small} & 2024 &
+    Kerangka kerja multi-LLM $\alpha$-UMi dengan fine-tuning progresif. &
+    Pemisahan peran (planner, caller, summarizer) meningkatkan kinerja LLM kecil dalam penggunaan alat. &
+    Model masih perlu diuji fleksibilitasnya pada berbagai tugas agen yang lebih luas. &
+    Belum mengeksplorasi integrasi kolaboratif antara LLM kecil dan LLM tertutup besar (seperti GPT-4). \\
+
+    2 & LLM vs Small Model? (Personality Detection) \cite{hu2024llm} & 2024 &
+    Augmentasi teks berbasis LLM dan pembelajaran kontrasif (TAE). &
+    Distilasi pengetahuan LLM meningkatkan akurasi model kecil dalam deteksi kepribadian dari media sosial. &
+    LLM gagal menangkap pola sentimen dan linguistik secara mandiri untuk tugas ini. &
+    Belum menggabungkan keunggulan graf pengetahuan (knowledge graphs) yang ada dengan LLM. \\
+
+    3 & Knowledge Graph Validation \cite{tsaneva2025knowledge} & 2025 & Evaluasi 9 workflow kolaboratif (Manusia, LLM, Hibrida). & Pendekatan hibrida (Human-in-the-loop + LLM) memberikan keseimbangan terbaik antara presisi dan recall. & Skalabilitas menjadi tantangan besar untuk graf pengetahuan berskala jutaan triple. & Belum adanya strategi prioritas anotasi untuk mencegah hambatan validasi pada sumber daya besar \& Pengembangan strategi prioritas anotasi dan pemilihan alur kerja dinamis. \\
+
+    4 & Predicting Equine Behavior \cite{topal2025predicting} & 2025 & Machine Learning klasik dengan penjelasan teks yang dihasilkan LLM. & LLM efektif memberikan penjelasan yang dapat dipahami manusia atas hasil prediksi model pohon keputusan. & Ukuran dataset sangat terbatas (hanya 49 subjek) serta Fitur fisiologis dan lingkungan belum dieksplorasi secara mendalam dalam model. & Perluasan dataset dan integrasi fitur tambahan seperti data lingkungan. \\
+
+    5 & Cendol: LLMs for Indonesian Languages \cite{cahyawijaya2024cendol} & 2024 & Instruction tuning skala besar pada bahasa daerah Indonesia & Peningkatan performa sebesar ~20\% pada tugas NLU/NLG bahasa lokal. & Kesulitan dalam menangkap pengetahuan lokal dan nilai budaya yang mendalam. \& Kurangnya korpus keselamatan (safety) yang bersumber langsung dari konteks lokal Indonesia. & Peningkatan penyelarasan manusia (human alignment) dan pengembangan sistem dialog multi-turn. \\
+
+    6 & RAG-enhanced Small LLM for Closed-Domain \cite{hong2025innovative} & 2025 & MRC-based RAG dan fine-tuning Llama 2 pada dataset internal. & Sistem mencapai akurasi tinggi (92,7\%) pada pengetahuan operasional spesifik. & Terjadi diskrepansi akurasi yang signifikan antar dataset uji yang berbeda. \& Belum ada evaluasi dampak komponen RAG secara terpisah dibandingkan model lain. & Penelitian lebih lanjut mengenai tata kelola data untuk konsistensi akurasi. \\
+
+    7 & Lost in the Middle \cite{liu2023lost} & 2023 & Eksperimen terkontrol pada QA multi-dokumen dan pengambilan key-value. & Performa LLM menurun drastis jika informasi relevan berada di tengah konteks panjang (U-shaped curve). & Model dengan jendela konteks luas tidak menjamin penggunaan informasi yang efisien di seluruh bagian. Strategi re-ranking dokumen sebagai solusi praktis untuk bias posisi belum sepenuhnya terstandarisasi. & Pengembangan protokol evaluasi baru yang meminimalkan bias posisi. \\
+
+    8 & LOGIC: Distillation in Stance Detection \cite{lee2024logic} & 2024 & Reasoning distillation dari LLM ke SLM (BART). & Model kecil hasil distilasi mampu melampaui GPT-3.5/4 Turbo dalam deteksi sikap. & Kualitas sangat bergantung pada keakuratan pengetahuan target yang diekstraksi dari LLM pengajar. Adanya risiko halusinasi dan bias dalam data penalaran yang dihasilkan LLM. & Optimasi untuk tugas NLP yang lebih luas dan pengembangan filter informasi salah. \\
+
+    9 & Ragas: Automated Evaluation of RAG & 2023 & Kerangka kerja evaluasi otomatis tanpa referensi (faithfulness, relevance). LLM dapat mengevaluasi kualitas sistem RAG secara efektif tanpa anotasi manusia. & ChatGPT kesulitan memilih kalimat krusial dari konteks yang sangat panjang [50]. & Metrik relevansi konteks masih sulit diukur secara akurat dibandingkan dimensi lainnya. & Penggunaan metrik tanpa referensi untuk mempercepat siklus pengembangan RAG. \\
+
+    10 & Explainable TCM Prescription & 2025 & Distilasi pengetahuan CoT dan Direct Preference Optimization (DPO). Model KD+DPO meningkatkan akurasi resep tanpa mengurangi transparansi logika medis. & Kesalahan masih terkonsentrasi pada penalaran diagnosis awal (hallucination). \& Pengetahuan dari literatur klasik dan data multi-modal (citra lidah/nadi) belum terintegrasi. & Integrasi graf pengetahuan medis dan pembelajaran multi-modal. \\
+
+    11 & SEA-LION: Southeast Asian Languages & 2025 & Continued Pre-training (CPT) dan model merging skala besar. & CPT meningkatkan kemampuan bahasa Asia Tenggara secara signifikan dibandingkan model dasar. & Tolok ukur (benchmarks) saat ini belum mencakup seluruh bahasa daerah secara holistik. \& Kebutuhan akan dataset evaluasi yang mencakup tugas spesifik LLM untuk semua bahasa daerah. & Pengembangan tolok ukur yang lebih inklusif dan eksplorasi ukuran model yang bervariasi. \\ \hline
+
+    \end{longtable}
+
+\end{landscape}
+
+Penelitian ini mengisi gap tersebut dengan fokus pada bahasa Indonesia dan LLM kecil.
+
+\subsection{Kerangka Pemikiran}
+Kerangka pemikiran dalam penelitian ini dibangun atas dasar pentingnya optimasi arsitektur Retrieval-Augmented Generation (RAG) dalam lingkungan yang memiliki keterbatasan sumber daya komputasi. Penelitian ini mengadopsi paradigma bahwa performa Small Language Models (SLM) sangat sensitif terhadap kualitas konteks yang diberikan.
+
+Penelitian ini berangkat dari premis bahwa penggunaan Small Language Models (SLM) untuk memproses dokumen Bahasa Indonesia pada perangkat edge computing (laptop standar) sangat bergantung pada efisiensi input. Karena SLM memiliki kapasitas context window dan kemampuan penalaran yang lebih terbatas dibanding LLM besar, kualitas retrieval menjadi faktor penentu utama (bottleneck).
+
+Proses retrieval dipengaruhi secara signifikan oleh teknik pemotongan teks (text chunking). Variabel bebas dalam penelitian ini adalah panjang token (chunk size) dan ukuran tumpang tindih (overlap size). Kombinasi kedua variabel ini akan memengaruhi representasi semantik dokumen dalam basis data vektor.
+
+Hipotesis yang dikembangkan adalah bahwa terdapat kombinasi threshold (ambang batas) spesifik untuk chunk size dan overlap yang menghasilkan presisi pencarian tertinggi. Jika chunk terlalu kecil tanpa overlap yang cukup, SLM akan kehilangan konteks. Sebaliknya, jika chunk terlalu besar, SLM akan kehilangan fokus karena noise dan keterbatasan memori. Oleh karena itu, penelitian ini akan memetakan kombinasi parameter tersebut untuk mengoptimalkan metrik evaluasi RAGAS (Faithfulness dan Answer Relevancy) pada model Phi-2 dan Gemma-2B, serta LLaMA 3.2.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/kerangka_pemikiran.png}
+    \caption{Diagram Alur Konseptual}
+    \label{fig:placeholder}
+\end{figure}
+
+\subsection{Hipotesis}
+Hipotesis dalam penelitian ini adalah:
+\begin{itemize}
+    \item \textbf{H1}: Terdapat pengaruh signifikan antara panjang chunk size terhadap kinerja SLM dalam menjawab pertanyaan Bahasa Indonesia.
+    \item \textbf{H2}: Terdapat kombinasi optimal antara chunk size dan overlap size yang menghasilkan skor evaluasi RAGAS tertinggi dibandingkan kombinasi parameter lainnya.
+\end{itemize}

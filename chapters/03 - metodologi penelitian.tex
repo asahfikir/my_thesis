@@ -1,0 +1,124 @@
+\chapter{METODE PENELITIAN}
+
+\section{Lokasi dan Waktu Penelitian}
+Penelitian akan dilakukan di Palembang selama Quarter 1 tahun 2026.
+
+\begin{ganttchart}[
+    hgrid,
+    vgrid,
+    bar height=0.7,
+    x unit=2cm,
+    bar label font=\small,
+    milestone label font=\small,
+    group label font=\small,
+    bar/.append style={fill=blue!40},
+    bar incomplete/.append style={fill=gray!30},
+    milestone/.append style={fill=red!60},
+    group/.append style={fill=green!40}
+]{1}{3}
+  % Judul bulan
+  \gantttitle{Januari}{1}
+  \gantttitle{Februari}{1}
+  \gantttitle{Maret}{1} \\
+
+  % Aktivitas
+  \ganttbar[bar/.append style={fill=blue!40}]
+    {\parbox{5.5cm}{Pengumpulan dokumen, cleaning, dan Ground Truth QA}}{1}{1} \\
+
+  \ganttbar[bar/.append style={fill=orange!40}]
+    {\parbox{5.5cm}{Pengembangan Sistem RAG dan instalasi environment}}{1}{2} \\
+
+  \ganttbar[bar/.append style={fill=green!40}]
+    {\parbox{5.5cm}{Pelaksanaan eksperimen (9 skenario x 3 model)}}{2}{2} \\
+
+  \ganttbar[bar/.append style={fill=red!40}]
+    {\parbox{5.5cm}{Evaluasi metrik, analisis data, dan kesimpulan}}{2}{3}
+
+\end{ganttchart}
+
+% [29]
+
+\section{Populasi dan Sampel}
+% [29]
+Penelitian ini menggunakan metode eksperimen kuantitatif dengan desain faktorial. Desain ini digunakan untuk menguji pengaruh variabel bebas (panjang chunk dan overlap) terhadap variabel terikat (akurasi jawaban).
+
+\section{Jenis dan Sumber Data}
+% [30]
+\subsection{Sumber Data}
+Penelitian akan menggunakan Dokumen Publik Bidang Kebijakan Publik \& Regulasi Berbahasa Indonesia, serta Dokumen Company Profile berbahasa Indonesia.
+
+\begin{itemize}
+    \item Dokumen RPJMN (Rencana Pembangunan Jangka Menengah Nasional) atau naskah akademik Undang-Undang Kesehatan. Dokumen ini bersifat formal, padat informasi, dan merepresentasikan tantangan nyata dalam mengambil informasi spesifik (factoid retrieval).
+    \item Dokumen Company Profile berbahasa yang disusun mensimulasikan \textit{Knowledge Base Document} pada dunia industri.
+\end{itemize}
+
+\subsection{Proses Data}
+\begin{itemize}
+    \item Ekstraksi: Mengambil teks dari format PDF/E-Book.
+    \item Pembersihan: Menghapus format HTML, header/footer yang berulang, dan karakter non-alfabetik.
+    \item Pembuatan Pasangan Pertanyaan-Jawaban (QA Pairs):
+    \item Sejumlah 50 pertanyaan akan dibuat berdasarkan konten dokumen.
+    \item Ground Truth Hibrida:
+        \begin{itemize}
+            \item Manual: Peneliti membuat 20 jawaban benar secara manual untuk validasi awal.
+            \item LLM-Based: Menggunakan model LLM besar (seperti GPT-4o) untuk menghasilkan 30 jawaban benar sisanya, yang kemudian diverifikasi oleh peneliti.
+        \end{itemize}
+\end{itemize}
+
+
+\section{Metode Pengumpulan Data}
+% [31] Questionnaire, Interview, Observation.
+% Rencana atau strategi pengumpulan data.
+\begin{itemize}
+    \item \textbf{Pengumpulan Data:} Jawaban generasi dari SLM dicatat dan disimpan dalam format CSV/JSON.
+    \item \textbf{Analisis Data:}
+        \begin{enumerate}
+            \item Menghitung skor F1, ROUGE, dan Cosine Similarity antara jawaban SML dan Ground Truth. \cite{es2025ragasautomatedevaluationretrieval}
+            \item Melakukan analisis statistik deskriptif (rata-rata dan standar deviasi).
+            \item Jika memungkinkan, melakukan uji ANOVA (Analysis of Variance) untuk melihat apakah perbedaan panjang chunk memberikan pengaruh yang signifikan secara statistik.
+        \end{enumerate}
+\end{itemize}
+
+\section{Definisi Operasional Variabel}
+% [31] Table format usually.
+% Gambaran detail tentang struktur penelitian (Variabel, Dimensi, Indikator).
+\begin{itemize}
+  \item \textbf{Variabel Bebas:}
+  \begin{enumerate}
+    \item Panjang Chunk: 128 token, 256 token, 512 token.
+    \item Overlap: 0\%, 10\%, 20\% dari panjang chunk.
+  \end{enumerate}
+
+  \item \textbf{Variabel Terikat:}
+  \begin{enumerate}
+    \item Akurasi Leksikal: F1-Score dan ROUGE-L.
+    \item Akurasi Semantik: Cosine Similarity (menggunakan embedding model multilingual, misal \texttt{intfloat/multilingual-e5-large}).
+  \end{enumerate}
+
+  \item \textbf{Variabel Kontrol:}
+  \begin{enumerate}
+    \item Model LLM (Phi-2, Gemma-2B, LLaMA 3.2$\sim$3B).
+    \item Perangkat Keras (Laptop Intel Core i7 Evo, RAM 16GB, Intel Iris Xe).
+    \item Temperatur generasi (diset pada 0 untuk deterministik).
+  \end{enumerate}
+\end{itemize}
+
+
+\section{Rancangan Analisis Data}
+% [32] SPSS, Thematic, etc.
+% Teknik analisis yang akan digunakan.
+Eksperimen akan dilakukan dengan skema berikut:
+\begin{itemize}
+    \item \textbf{Sistem RAG Lokal:} Membangun pipeline menggunakan framework LangChain atau LlamaIndex.
+    \item \textbf{Konfigurasi Model:} Model akan dijalankan dalam format GGUF (4-bit quantization) agar dapat dimuat sepenuhnya ke dalam RAM 16GB dan berjalan lancar di Onboard GPU (Intel Iris) menggunakan inferensi engine seperti llama.cpp atau Ollama.
+\end{itemize}
+
+
+\section{Rancangan Uji Hipotesis}
+% [33] t-test, F-test, etc.
+Untuk skenario Pengujian Hipotesis setiap kombinasi variabel bebas (3 Chunk Sizes × 3 Overlaps = 9 skenario) akan diuji pada ketiga model dengan menggunakan proses inferensi sebagai berikut
+\begin{itemize}
+    \item Dokumen di-chunk sesuai skenario.
+    \item Untuk setiap pertanyaan, sistem mengambil 3 chunk relevan (Top-k=3).
+    \item Konteks dan pertanyaan diberikan ke SLM untuk menghasilkan jawaban.
+\end{itemize}

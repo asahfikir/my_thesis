@@ -1,0 +1,68 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+# Compiled output
+*.pdf
+*.dvi
+*.ps
+
+# Auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.pdfsync
+
+# Bibliography
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+
+# Index and glossary
+*.idx
+*.ind
+*.ilg
+*.glo
+*.gls
+*.ist
+*.acn
+*.acr
+*.alg
+
+# Beamer
+*.nav
+*.snm
+*.vrb
+
+# Minted and other packages
+_minted*
+*.pyg
+*.listing
+
+# Editor-specific
+*.swp
+*.swo
+*~
+.DS_Store
+.vscode/
+.idea/
+
+# Build directories
+build/
+out/
+latex.out/
+.auctex-auto/
+.zed
