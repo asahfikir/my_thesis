@@ -1,25 +1,41 @@
 % Awal mulai AI Boom
-@misc{vaswani2023attentionneed,
-      title={Attention Is All You Need},
-      author={Ashish Vaswani and Noam Shazeer and Niki Parmar and Jakob Uszkoreit and Llion Jones and Aidan N. Gomez and Lukasz Kaiser and Illia Polosukhin},
-      year={2017},
-      eprint={1706.03762},
+@inproceedings{vaswani2023attentionneed,
+  author = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N. and Kaiser, \L{}ukasz and Polosukhin, Illia},
+  title = {Attention is all you need},
+  year = {2017},
+  isbn = {9781510860964},
+  publisher = {Curran Associates Inc.},
+  address = {Red Hook, NY, USA},
+  abstract = {The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.0 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.},
+  booktitle = {Proceedings of the 31st International Conference on Neural Information Processing Systems},
+  pages = {6000–6010},
+  numpages = {11},
+  location = {Long Beach, California, USA},
+  series = {NIPS'17}
+}
+
+@misc{ouyang2022traininglanguagemodelsfollow,
+      title={Training language models to follow instructions with human feedback}, 
+      author={Long Ouyang and Jeff Wu and Xu Jiang and Diogo Almeida and Carroll L. Wainwright and Pamela Mishkin and Chong Zhang and Sandhini Agarwal and Katarina Slama and Alex Ray and John Schulman and Jacob Hilton and Fraser Kelton and Luke Miller and Maddie Simens and Amanda Askell and Peter Welinder and Paul Christiano and Jan Leike and Ryan Lowe},
+      year={2022},
+      eprint={2203.02155},
       archivePrefix={arXiv},
       primaryClass={cs.CL},
-      url={https://arxiv.org/abs/1706.03762},
+      url={https://arxiv.org/abs/2203.02155}, 
+}
+
+% Cara kerja AI, few shots learner, predicted what's next
+@misc{brown2020languagemodelsfewshotlearners,
+      title={Language Models are Few-Shot Learners}, 
+      author={Tom B. Brown and Benjamin Mann and Nick Ryder and Melanie Subbiah and Jared Kaplan and Prafulla Dhariwal and Arvind Neelakantan and Pranav Shyam and Girish Sastry and Amanda Askell and Sandhini Agarwal and Ariel Herbert-Voss and Gretchen Krueger and Tom Henighan and Rewon Child and Aditya Ramesh and Daniel M. Ziegler and Jeffrey Wu and Clemens Winter and Christopher Hesse and Mark Chen and Eric Sigler and Mateusz Litwin and Scott Gray and Benjamin Chess and Jack Clark and Christopher Berner and Sam McCandlish and Alec Radford and Ilya Sutskever and Dario Amodei},
+      year={2020},
+      eprint={2005.14165},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2005.14165}, 
 }
 
 % Cara kerja AI, kenapa chunking dll itu penting
-@misc{liu2023lostmiddlelanguagemodels,
-      title={Lost in the Middle: How Language Models Use Long Contexts},
-      author={Nelson F. Liu and Kevin Lin and John Hewitt and Ashwin Paranjape and Michele Bevilacqua and Fabio Petroni and Percy Liang},
-      year={2023},
-      eprint={2307.03172},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2307.03172},
-}
-
 @article{Liu2023LostIT,
   title={Lost in the Middle: How Language Models Use Long Contexts},
   author={Nelson F. Liu and Kevin Lin and John Hewitt and Ashwin Paranjape and Michele Bevilacqua and Fabio Petroni and Percy Liang},
@@ -28,6 +44,44 @@
   volume={12},
   pages={157-173},
   url={https://api.semanticscholar.org/CorpusID:259360665}
+}
+
+% Teknik Distilasi
+@misc{rae2022scalinglanguagemodelsmethods,
+      title={Scaling Language Models: Methods, Analysis and Insights from Training Gopher}, 
+      author={Jack W. Rae and Sebastian Borgeaud and Trevor Cai and Katie Millican and Jordan Hoffmann and Francis Song and John Aslanides and Sarah Henderson and Roman Ring and Susannah Young and Eliza Rutherford and Tom Hennigan and Jacob Menick and Albin Cassirer and Richard Powell and George van den Driessche and Lisa Anne Hendricks and Maribeth Rauh and Po-Sen Huang and Amelia Glaese and Johannes Welbl and Sumanth Dathathri and Saffron Huang and Jonathan Uesato and John Mellor and Irina Higgins and Antonia Creswell and Nat McAleese and Amy Wu and Erich Elsen and Siddhant Jayakumar and Elena Buchatskaya and David Budden and Esme Sutherland and Karen Simonyan and Michela Paganini and Laurent Sifre and Lena Martens and Xiang Lorraine Li and Adhiguna Kuncoro and Aida Nematzadeh and Elena Gribovskaya and Domenic Donato and Angeliki Lazaridou and Arthur Mensch and Jean-Baptiste Lespiau and Maria Tsimpoukelli and Nikolai Grigorev and Doug Fritz and Thibault Sottiaux and Mantas Pajarskas and Toby Pohlen and Zhitao Gong and Daniel Toyama and Cyprien de Masson d'Autume and Yujia Li and Tayfun Terzi and Vladimir Mikulik and Igor Babuschkin and Aidan Clark and Diego de Las Casas and Aurelia Guy and Chris Jones and James Bradbury and Matthew Johnson and Blake Hechtman and Laura Weidinger and Iason Gabriel and William Isaac and Ed Lockhart and Simon Osindero and Laura Rimell and Chris Dyer and Oriol Vinyals and Kareem Ayoub and Jeff Stanway and Lorrayne Bennett and Demis Hassabis and Koray Kavukcuoglu and Geoffrey Irving},
+      year={2022},
+      eprint={2112.11446},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2112.11446}, 
+}
+
+% Splitter Langchain
+@misc{langchain2025splitter,
+  title = {LangChain Splitter Documentation},
+  author = "LangChain Team",
+  year = {2025},
+  howpublished = {\url{https://python.langchain.com/docs/modules/data_connection/document_loaders/splitter}},
+  note = {Akses di: 2025-10-19}
+}
+
+@inproceedings{cahyawijaya2021indonlg,
+    title = "{I}ndo{NLG}: Benchmark and Resources for Evaluating {I}ndonesian Natural Language Generation",
+    author = "Cahyawijaya, Samuel and Winata, Genta Indra and Wilie, Bryan and Vincentio, Karissa and Li, Xiaohong and Kuncoro, Adhiguna and Ruder, Sebastian and Lim, Zhi Yuan and Bahar, Syafri and Khodra, Masayu and Purwarianti, Ayu and Fung, Pascale",
+    booktitle = "Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing", month = nov, year = "2021",
+    address = "Online and Punta Cana, Dominican Republic",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.emnlp-main.699",
+    pages = "8875--8898",
+}
+
+@misc{weaviate2024chunking,
+  title={Chunking Strategies for RAG: Best Practices},
+  author={{Weaviate Team}},
+  howpublished={Weaviate Blog},
+  year={2024},
+  note={Akses di https://weaviate.io/blog/chunking-strategies-for-rag}
 }
 
 % Highlight problem akurasi pada baseline RAG
@@ -52,23 +106,13 @@
       url={https://arxiv.org/abs/2309.15217},
 }
 
-% Menunjukkan bahwa rata-rata penelitian hanya menggunakan LLM besar bukan SLM
-@misc{xu2024activecellbalancingextended,
-      title={Active Cell Balancing for Extended Operational Time of Lithium-Ion Battery Systems in Energy Storage Applications},
-      author={Yiming Xu and Xiaohua Ge and Ruohan Guo and Weixiang Shen},
-      year={2024},
-      eprint={2405.00973},
-      archivePrefix={arXiv},
-      primaryClass={eess.SY},
-      url={https://arxiv.org/abs/2405.00973},
-}
-
 @inproceedings{shen2024small,
   title={Small LLMs Are Weak Tool Learners: A Multi-LLM Agent},
   author={Shen, Weizhou and Li, Chenliang and Chen, Hongzhan and Yan, Ming and Quan, Xiaojun and Chen, Hehong and Zhang, Ji and Huang, Fei},
   booktitle={Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing (EMNLP)},
   pages={16658--16680},
-  year={2024}
+  year={2024},
+  url={https://aclanthology.org/2024.emnlp-main.929.pdf}
 }
 
 @article{hu2024llm,
@@ -76,7 +120,8 @@
   author={Hu, Linmei and He, Hongyu and Wang, Duokang and Zhao, Ziwang and Shao, Yingxia and Nie, Liqiang},
   journal={Proceedings of the AAAI Conference on Artificial Intelligence (AAAI-24)},
   volume={38},
-  year={2024}
+  year={2024},
+  url={https://arxiv.org/pdf/2403.07581}
 }
 
 @article{tsaneva2025knowledge,
@@ -86,7 +131,8 @@
   volume={62},
   number={104145},
   year={2025},
-  publisher={Elsevier}
+  publisher={Elsevier},
+  url={https://pdf.sciencedirectassets.com/271647/1-s2.0-S0306457325X00030/1-s2.0-S030645732500086X/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEJ7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJGMEQCIH4MUyifDMiauiPlh4cff6sB0sOe7BRHL3OEDr55S85sAiBIq3THbF2SkSUgcXG4Mv5qlAbOJSVLMOCEg%2BcjZ4zduCqzBQhnEAUaDDA1OTAwMzU0Njg2NSIMMVFxLtKIVPEE9icMKpAFrevgPeGRVvxQCiYEDjZ5WvCkeosVbE0%2BnE%2F4Eh86h%2B4Q5EtF70SndmcAwbX%2BpA5wv6L%2BoFTY0jyHXJJ%2FI3EuzKynTIFS0LcCUpe7dHlxELWEPltrMVFMHHX88vyxsWiL%2BpasI8vLv2vnKzRvF56fOsuKLLbA6U3KWtoC9vWtl4VPTs5NoN0Q58IKBsoUowcVEXXevRuWQCziYNmKRV6N10TlwWPrVAHNbISoBYpyJMjG96mFmH5%2BnLItTdvzeuTmSeqb6uELOEJKGbssPS24R85v2pOa%2B9ebkuFCpWPDzdnRGzFyVXdPwVlDYMTEWT6mnz6zaNwiODvdFZxY0%2F6OD1ehfQZHf%2F8FLP1ELE7CvcNxVm8fETrsiNWt2XtbHuQLmksU23oEBfIx1Cyir%2B66%2BT9i%2BdeeZXQYxCUhr%2Fh7e4Fk6YotUYGl7O2CDjgsWviFW2fGpLFB09%2Fu8KNyJA48sDV105sSpdmkS6USxIFWmKohift7qYs75M5BY7lWIumLWPR11Mw7jCtj4ehWdH7suhaWdrTxOFUgmaOrKhAPpCweMiciXVM2wU%2FM3Xztb6cISvnjUQmjvLek9o5AImgPrgVIf%2FZnx%2FFJyTsJkUc%2F8yt5cA1y5aYnLRPHIBm9izm4x0CpUUU2CXsnLKPHvznFt94emLTavTLyggg7vKIp82%2F%2BiIN0jnVdHTm0LbszjdzMMfmt1LgQ2dBaUB%2BLkzCKp%2FuoWNciUdY5XeaMy1DsK34jVC2PhH7j2XBtsVJNQxcP%2Bu66AwB5Vi6kudrFoyOjYi4Phb1CfT6IRh5MeU1ao87fQ5xvY%2F8LlEvIvqAdqwVIIa%2FglK69vJlVDjHKNDz9yQdflPZga8Vdxn8%2FeMtTgj0wm4LXzAY6sgHJjaNunG5hxEg%2BW9wRvv3JyuQQcMJBBYJUob6yVt1QeHAfK%2BMsYURTHMBlbmbhFROXJ6Bf9KUeyhNCR%2FziH9oLLku%2FuTmYoAqXLx%2FcX5cnJl6nVIFt0tm8J%2Bnj9wGkr5bYEkqKb6jd6gLXyvRFLdqwVneyGpsZaGKTLQ9bUS%2F1rA6UPFKr177CtY91zNTXIgzfQmljI1pIr%2Fk4k7sCEy0fXHc4AY840aMp2a23gPokzMVu&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20260218T144318Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYU72AC7X4%2F20260218%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=3e22a90e8a2426c41fe442c0d435d5aa9cf5ae133b76aceeb8c902e0984a9db7&hash=2dd810b9ffeeadbb0e1159942634dfa50ac52213308a7939d0000c2ea014f4f8&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S030645732500086X&tid=spdf-c752f689-709f-42d9-9e89-45294fc4a127&sid=7dabce1664b04841900abdc7c6d7905d69fdgxrqb&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&rh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=0f045602020b5b030404&rr=9cfe4bbeeb5e03d4&cc=id}
 }
 
 @article{topal2025predicting,
@@ -116,13 +162,6 @@
   year={2025}
 }
 
-@article{liu2023lost,
-  title={Lost in the Middle: How Language Models Use Long Contexts},
-  author={Liu, Nelson F. and Lin, Kevin and Hewitt, John and Paranjape, Ashwin and Bevilacqua, Michele and Petroni, Fabio and Liang, Percy},
-  journal={Transactions of the Association for Computational Linguistics (TACL)},
-  year={2023}
-}
-
 @article{lee2024logic,
   title={LOGIC: LLM-originated guidance for internal cognitive improvement of small language models in stance detection},
   author={Lee, Woojin and Lee, Jaewook and Kim, Harksoo},
@@ -131,13 +170,6 @@
   number={e2585},
   year={2024},
   publisher={PeerJ Inc.}
-}
-
-@article{es2023ragas,
-  title={Ragas: Automated Evaluation of Retrieval Augmented Generation},
-  author={Es, Shahul and James, Jithin and Espinosa-Anke, Luis and Schockaert, Steven},
-  journal={arXiv preprint arXiv:2309.15217},
-  year={2023}
 }
 
 @article{wang2025reinforcement,
@@ -155,4 +187,154 @@
   author={Ng, Raymond and Nguyen, Thanh Ngan and Huang, Yuli and Tai, Ngee Chia and Leong, Wai Yi and others},
   journal={Preprint},
   year={2025}
+}
+
+% Literary Review
+@article{zhao2023survey,
+  title   = {A Survey of Large Language Models},
+  author  = {Zhao, Wayne X. and Zhou, Kun and Li, Junyi and Tang, Jianwei and Wang, Xiaoxia and Zhu, Tingwen and others},
+  journal = {arXiv preprint arXiv:2303.18223},
+  year    = {2023},
+  url     = {https://arxiv.org/abs/2303.18223}
+}
+
+@inproceedings{lewis2020rag,
+  author = {Lewis, Patrick and Perez, Ethan and Piktus, Aleksandra and Petroni, Fabio and Karpukhin, Vladimir and Goyal, Naman and K\"{u}ttler, Heinrich and Lewis, Mike and Yih, Wen-tau and Rockt\"{a}schel, Tim and Riedel, Sebastian and Kiela, Douwe},
+  title = {Retrieval-augmented generation for knowledge-intensive NLP tasks},
+  year = {2020},
+  isbn = {9781713829546},
+  publisher = {Curran Associates Inc.},
+  address = {Red Hook, NY, USA},
+  abstract = {Large pre-trained language models have been shown to store factual knowledge in their parameters, and achieve state-of-the-art results when fine-tuned on downstream NLP tasks. However, their ability to access and precisely manipulate knowledge is still limited, and hence on knowledge-intensive tasks, their performance lags behind task-specific architectures. Additionally, providing provenance for their decisions and updating their world knowledge remain open research problems. Pre-trained models with a differentiable access mechanism to explicit non-parametric memory can overcome this issue, but have so far been only investigated for extractive downstream tasks. We explore a general-purpose fine-tuning recipe for retrieval-augmented generation (RAG) — models which combine pre-trained parametric and non-parametric memory for language generation. We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever. We compare two RAG formulations, one which conditions on the same retrieved passages across the whole generated sequence, and another which can use different passages per token. We fine-tune and evaluate our models on a wide range of knowledge-intensive NLP tasks and set the state of the art on three open domain QA tasks, outperforming parametric seq2seq models and task-specific retrieve-and-extract architectures. For language generation tasks, we find that RAG models generate more specific, diverse and factual language than a state-of-the-art parametric-only seq2seq baseline.},
+  booktitle = {Proceedings of the 34th International Conference on Neural Information Processing Systems},
+  articleno = {793},
+  numpages = {16},
+  location = {Vancouver, BC, Canada},
+  series = {NIPS '20},
+  url       = {https://arxiv.org/abs/2005.11401}
+}
+
+@article{lu2025slm,
+  title   = {Small Language Models: Survey, Measurements, and Insights},
+  author  = {Lu, Zhenyan and Li, Xiang and Cai, Dongqi and Yi, Rongjie and Liu, Fangming and others},
+  journal = {arXiv preprint arXiv:2409.15790},
+  year    = {2025},
+  url     = {https://arxiv.org/abs/2409.15790}
+}
+
+@misc{indonlp2022,
+  title   = {IndoNLP -- Indonesian NLP Research Community},
+  author  = {IndoNLP},
+  year    = {2022},
+  url     = {https://indonlp.github.io}
+}
+
+@misc{maulana2023indonesiannews,
+  title  = {Indonesian News Dataset},
+  author = {Maulana, Iqbal},
+  year   = {2023},
+  url    = {https://www.kaggle.com/datasets/iqbalmaulana/indonesian-news-dataset}
+}
+
+@misc{qwen2024qwen25,
+  title     = {Qwen2.5-3B-Instruct},
+  author    = {Qwen Team},
+  year      = {2024},
+  url       = {https://huggingface.co/Qwen/Qwen2.5-3B-Instruct},
+  note      = {Model card and documentation}
+}
+
+@article{zhu2026bestpractices,
+  title   = {Pursuing Best Industrial Practices for Retrieval-Augmented Generation in the Medical Domain},
+  author  = {Zhu, Wei},
+  journal = {arXiv preprint arXiv:2602.03368},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2602.03368}
+}
+
+@article{gomez2025chunking,
+  title     = {Comparative Evaluation of Advanced Chunking for Retrieval-Augmented Generation in Large Language Models for Clinical Decision Support},
+  author    = {Gomez-Cabello, Cesar Abraham and Prabha, Srinivasagam and Haider, Syed Ali and others},
+  journal   = {Bioengineering},
+  volume    = {12},
+  number    = {11},
+  pages     = {1194},
+  year      = {2025},
+  doi       = {10.3390/bioengineering12111194},
+  url       = {https://pmc.ncbi.nlm.nih.gov/articles/PMC12649634}
+}
+
+@article{reuter2025legalrag,
+  title   = {Towards Reliable Retrieval in RAG Systems for Large Legal Datasets},
+  author  = {Reuter, Markus and Lingenberg, Tobias and Liepi{\c{n}}a, R{\=u}ta and others},
+  journal = {arXiv preprint arXiv:2510.06999},
+  year    = {2025},
+  url     = {https://arxiv.org/abs/2510.06999}
+}
+
+@inproceedings{es2024ragas,
+  title     = {RAGAs: Automated Evaluation of Retrieval Augmented Generation},
+  author    = {Es, Shahul and James, Jithin and Espinosa Anke, Luis and Schockaert, Steven},
+  booktitle = {Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics: System Demonstrations},
+  pages     = {150--158},
+  year      = {2024},
+  url       = {https://aclanthology.org/2024.eacl-demo.16/}
+}
+
+@book{manning2008ir,
+  title     = {Introduction to Information Retrieval},
+  author    = {Manning, Christopher D. and Raghavan, Prabhakar and Sch{\"u}tze, Hinrich},
+  year      = {2008},
+  publisher = {Cambridge University Press},
+  url       = {https://nlp.stanford.edu/IR-book/pdf/08eval.pdf}
+}
+
+@misc{microsoft2023phi2,
+  title  = {Phi-2 (2.7B) Language Model},
+  author = {Microsoft},
+  year   = {2023},
+  url    = {https://huggingface.co/microsoft/phi-2}
+}
+
+@misc{sailor2025sailor2,
+  title  = {Sailor2-3B and Sailor2-3B-Chat},
+  author = {Sea AI Lab},
+  year   = {2025},
+  url    = {https://huggingface.co/sail/Sailor2-3B}
+}
+
+@misc{aisingapore2023sealion,
+  title  = {SEA-LION-v1-3B},
+  author = {AI Singapore},
+  year   = {2023},
+  url    = {https://huggingface.co/aisingapore/SEA-LION-v1-3B}
+}
+
+@misc{sealion2024docs,
+  title  = {SEA-LION Documentation},
+  author = {AI Singapore},
+  year   = {2024},
+  url    = {https://docs.sea-lion.ai}
+}
+
+@misc{lamsal2025chunking,
+  title  = {Fixed-size, Semantic and Recursive Chunking Strategies for LLMs},
+  author = {Lamsal, Rabindra},
+  year   = {2025},
+  url    = {https://blog.langformers.com/llm-chunking-strategies},
+  note = {Diakses pada 2025-10-14}
+}
+
+@article{LI2025100417,
+	title = {Retrieval-augmented generation for educational application: A systematic survey},
+	journal = {Computers and Education: Artificial Intelligence},
+	volume = {8},
+	pages = {100417},
+	year = {2025},
+	issn = {2666-920X},
+	doi = {https://doi.org/10.1016/j.caeai.2025.100417},
+	url = {https://www.sciencedirect.com/science/article/pii/S2666920X25000578},
+	author = {Zongxi Li and Zijian Wang and Weiming Wang and Kevin Hung and Haoran Xie and Fu Lee Wang},
+	keywords = {Artificial intelligence in education, Retrieval-augmented generation (RAG), Educational applications, Large language models (LLMs)},
+	abstract = {Advancements in large language models (LLMs) have transformed AI-driven education, enabling innovative applications across various learning and teaching domains. However, LLMs still face several challenges, including hallucination and static internal knowledge, which hinder their reliability in educational settings. Retrieval-Augmented Generation (RAG) enhances LLMs by retrieving relevant information from an external knowledge base and incorporating it into the LLM's generation process. This approach improves factual accuracy and enables dynamic knowledge updates, making LLMs particularly suitable for educational applications. In this paper, we comprehensively review existing research that integrates RAG into educational scenarios. We first clarify the definition and workflow of RAG, and following the indexing mechanism of RAG, we introduce different types of retrievers and generation optimization methods. As the main focus of this work, we explore the practical applications of RAG in education, covering interactive learning systems, generation and assessment of educational content, and large-scale deployment in educational ecosystems. Based on our comprehensive review, this paper discusses existing challenges and future directions, including mitigating hallucinations, ensuring the completeness and timeliness of retrieved knowledge, reducing computational costs, and enhancing multimodal support for RAG-based educational applications.}
 }

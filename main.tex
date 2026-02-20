@@ -22,6 +22,7 @@
 \usepackage{ragged2e}           % optional, for nicer ragged right in p-columns
 \newcolumntype{P}[1]{>{\RaggedRight\arraybackslash}p{#1}}
 \usepackage{float}
+\usepackage{hyperref}
 
 % ================= CONFIGURATION =================
 
@@ -96,6 +97,10 @@
 % This overrides the default behavior of following the Chapter style.
 \renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
 \renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
 
 % ================= TOCLOFT CONFIGURATION (ROBUST FIX) =================
 
