@@ -92,7 +92,26 @@ Untuk mengukur kualitas generasi, digunakan \textit{RAGAS} (Retrieval-Augmented 
     \item \textbf{Context Relevancy:} Mengukur seberapa relevan konteks yang diberikan terhadap pertanyaan pengguna.
 \end{itemize}
 
-Pemisahan metrik evaluasi otomatis ini dari evaluasi manual penting untuk memastikan skalabilitas dan objektivitas, terutama ketika membandingkan banyak konfigurasi chunking dan model. Evaluasi manual masih diperlukan untuk analisis kualitatif, tetapi RAGAS memungkinkan siklus eksperimen yang lebih cepat dan lebih konsisten \citep{es2025ragasautomatedevaluationretrieval}.
+\subsubsection{Konsep Judge Model dalam Evaluasi RAG}
+Dalam kerangka evaluasi otomatis seperti RAGAS, terdapat tantangan mendasar mengenai \textit{siapa} yang menilai kualitas jawaban. Karena tidak ada referensi jawaban tunggal yang benar (\textit{gold standard}) untuk setiap pertanyaan, evaluasi harus dilakukan secara otomatis oleh model bahasa lain yang berperan sebagai \textbf{judge} (penilai) \citep{zheng2023judging}. 
+
+\textbf{Mekanisme Judge Model:}
+\begin{itemize}
+    \item Judge model adalah model bahasa besar (LLM) yang independen dari model yang sedang dievaluasi (SLM).
+    \item Judge menerima input berupa: (1) pertanyaan pengguna, (2) konteks yang diambil oleh retriever, dan (3) jawaban yang dihasilkan oleh SLM.
+    \item Judge kemudian menilai kualitas jawaban berdasarkan kriteria tertentu (misal: apakah jawaban didukung oleh konteks? apakah jawaban relevan dengan pertanyaan?).
+    \item Hasil penilaian diberikan dalam bentuk skor numerik (0--1) yang kemudian dirata-ratakan untuk mendapatkan metrik evaluasi.
+\end{itemize}
+
+\textbf{Pentingnya Independensi Judge:}
+Menggunakan model yang sama untuk menghasilkan jawaban dan menilai jawaban dapat menimbulkan \textit{self-bias} atau kecenderungan model untuk menilai jawabannya sendiri lebih tinggi \citep{zheng2023judging}. Oleh karena itu, dalam penelitian ini, judge model harus memenuhi kriteria:
+\begin{enumerate}
+    \item \textbf{Kapasitas yang lebih besar:} Judge harus memiliki kemampuan penalaran dan pemahaman bahasa yang lebih baik daripada SLM yang dievaluasi.
+    \item \textbf{Independensi:} Judge tidak boleh merupakan model yang sama atau turunan dari model yang dievaluasi.
+    \item \textbf{Kemampuan multilingual:} Judge harus mampu mengevaluasi teks berbahasa Indonesia dengan baik.
+\end{enumerate}
+
+Pemisahan metrik evaluasi otomatis ini dari evaluasi manual penting untuk memastikan skalabilitas dan objektivitas, terutama ketika membandingkan banyak konfigurasi chunking dan model. Evaluasi manual masih diperlukan untuk analisis kualitatif, tetapi RAGAS dengan judge model yang tepat memungkinkan siklus eksperimen yang lebih cepat dan lebih konsisten \citep{es2025ragasautomatedevaluationretrieval}.
 
 \subsection{Research Gap}
 
