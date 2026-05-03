@@ -101,7 +101,7 @@ Dokumen dari kedua sumber tersebut kemudian digabungkan menjadi satu korpus terp
   \item \textbf{Variabel Kontrol:}
   \begin{enumerate}
     \item Model LLM \textit{Qwen2.5-3B-Instruct, Sailor2-3B-Chat, SEA-LION-v1-3B}.
-    \item \textbf{Judge Model:} Qwen2.5-72B-Instruct (digunakan untuk evaluasi RAGAS).
+    \item \textbf{Judge Model:} Kimi K2.5 (digunakan untuk evaluasi RAGAS).
     \item Perangkat Keras (Laptop Intel Core i7 Evo, RAM 16GB, Intel Iris Xe).
     \item Temperatur generasi (diset pada 0 untuk deterministik).
   \end{enumerate}
@@ -250,7 +250,7 @@ Penelitian ini menggunakan kerangka evaluasi multidimensi untuk mengukur aspek a
     \end{itemize}
     
     \textbf{Spesifikasi Judge Model:}
-    Dalam penelitian ini, digunakan \textbf{Qwen2.5-72B-Instruct} sebagai judge model untuk mengevaluasi jawaban dari ketiga SLM. Pemilihan ini didasarkan pada pertimbangan bahwa model dengan 72 miliar parameter memiliki kapasitas penalaran yang jauh lebih superior dibandingkan SLM 3B yang dievaluasi, namun tetap dalam satu keluarga model (Qwen2.5) sehingga memiliki konsistensi dalam pemahaman bahasa Indonesia. Penggunaan model yang lebih besar sebagai judge memastikan penilaian yang lebih akurat dan mengurangi risiko \textit{self-bias} yang terjadi jika model menilai jawabannya sendiri \citep{zheng2023judging}.
+    Dalam penelitian ini, digunakan \textbf{Kimi K2.5} sebagai judge model untuk mengevaluasi jawaban dari ketiga SLM. Pemilihan ini didasarkan pada pertimbangan bahwa model dengan kapasitas penalaran yang jauh lebih superior dibandingkan SLM 3B yang dievaluasi, serta kemampuan multibahasa yang kuat untuk bahasa Indonesia. Penggunaan model yang lebih besar sebagai judge memastikan penilaian yang lebih akurat dan mengurangi risiko \textit{self-bias} yang terjadi jika model menilai jawabannya sendiri \citep{zheng2023judging}.
      
   \item Metrik Efisiensi (Efficiency Metrics)\par
     Mengingat batasan perangkat keras terbatas yang digunakan (laptop standar), efisiensi sistem menjadi faktor penting. 
@@ -266,6 +266,6 @@ Prosedur eksperimen dilakukan secara sistematis untuk memastikan reproduktibilit
     \item Persiapan dan Pemotongan Dokumen: Dokumen dari korpus hukum dan berita dipotong menggunakan skrip Python yang menerapkan \textit{Recursive Character Splitter}. Sembilan kombinasi parameter (\textit{chunk\_size}, \textit{overlap}) yaitu (128, 256, 512) token dan (0\%, 10\%, 20\%) diterapkan untuk menghasilkan set data potongan yang terpisah. 
     \item Pengindeksan Vektor (\textit{Vector Indexing}): Setiap set potongan dikonversi menjadi vektor menggunakan model embedding dan diindeksasikan menggunakan FAISS. Indeks ini disimpan untuk keperluan retrieval secara cepat. 
     \item Pelaksanaan Inferensi: Untuk setiap kombinasi parameter dan setiap model SLM, sistem dijalankan untuk memproses seluruh pertanyaan uji. Sistem mencatat log waktu (latensi) dan penggunaan memori untuk setiap eksekusi. 
-    \item Koleksi Hasil dan Perhitungan Metrik: Hasil jawaban dan konteks yang diambil disimpan. Selanjutnya, metrik evaluasi (\textit{Recall}, \textit{F1}, \textit{Faithfulness}, dll.) dihitung. Untuk metrik \textit{RAGAS}, digunakan model \textbf{Qwen2.5-72B-Instruct} sebagai \textit{judge} otomatis untuk menilai kualitas jawaban tanpa bias terhadap model \textit{SLM} yang sedang diuji. Judge model dijalankan melalui API atau platform yang mendukung model berukuran besar (seperti Together AI, Fireworks, atau OpenRouter) untuk memastikan konsistensi evaluasi. Setiap jawaban dinilai berdasarkan faithfulness (apakah jawaban didukung konteks?), answer relevancy (apakah jawaban menjawab pertanyaan?), dan context precision/recall (seberapa relevan chunk yang diambil).
+    \item Koleksi Hasil dan Perhitungan Metrik: Hasil jawaban dan konteks yang diambil disimpan. Selanjutnya, metrik evaluasi (\textit{Recall}, \textit{F1}, \textit{Faithfulness}, dll.) dihitung. Untuk metrik \textit{RAGAS}, digunakan model \textbf{Kimi K2.5} sebagai \textit{judge} otomatis untuk menilai kualitas jawaban tanpa bias terhadap model \textit{SLM} yang sedang diuji. Judge model dijalankan melalui API untuk memastikan konsistensi evaluasi. Setiap jawaban dinilai berdasarkan faithfulness (apakah jawaban didukung konteks?), answer relevancy (apakah jawaban menjawab pertanyaan?), dan context precision/recall (seberapa relevan chunk yang diambil).
 \end{itemize}
 
