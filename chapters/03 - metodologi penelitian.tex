@@ -72,15 +72,7 @@ Dokumen dari kedua sumber tersebut kemudian digabungkan menjadi satu korpus terp
 \section{Metode Pengumpulan Data}
 % [31] Questionnaire, Interview, Observation.
 % Rencana atau strategi pengumpulan data.
-\begin{itemize}
-    \item \textbf{Pengumpulan Data:} Jawaban generasi dari SLM dicatat dan disimpan dalam format CSV/JSON.
-    \item \textbf{Analisis Data:}
-        \begin{enumerate}
-            \item Menghitung skor F1, ROUGE, dan Cosine Similarity antara jawaban SML dan Ground Truth. \citep{es2025ragasautomatedevaluationretrieval}
-            \item Melakukan analisis statistik deskriptif (rata-rata dan standar deviasi).
-            \item Jika memungkinkan, melakukan uji ANOVA (Analysis of Variance) untuk melihat apakah perbedaan panjang chunk memberikan pengaruh yang signifikan secara statistik.
-        \end{enumerate}
-\end{itemize}
+Data undang-undang didapatkan langsung dari sumber primer melalui situs resmi Jaringan Dokumentasi dan Informasi Hukum Kementerian Komunikasi dan Digital (JDIH). Sedangkan korpus berita didapatkan dari hasil scraping 3 portal berita nasional Indonesia yaitu Detik, Tempo, dan Kompas.
 
 \section{Definisi Operasional Variabel}
 % [31] Table format usually.
@@ -115,34 +107,58 @@ Peneliltian ini ditujukan untuk mengidentifikasi kombinasi optimal dari panjang 
 Secara umum, penelitian ini diawali dengan pengumpulan data dokumen publik Bahasa Indonesia, kemudian dilakukan pemrosesan teks (\textit{preprocessing}) dan pemotongan dokumen (\textit{chunking}) berdasarkan parameter yang ditentukan. Dokumen yang telah dipotong kemudian diindeksasikan ke dalam basis data vektor untuk keperluan \textit{retrieval} pada \textit{pipeline RAG}. Selanjutnya, sistem diuji dengan serangkapan pertanyaan untuk mengukur kemampuan sistem dalam mengambil informasi yang relevan dan menghasilkan jawaban yang akurat. Akhirnya, hasil dari berbagai kombinasi parameter dianalisis untuk menemukan konfigurasi yang memberikan keseimbangan terbaik antara akurasi dan efisiensi (latensi).
 
 \begin{figure}[H]
-    \centering
-    \begin{tikzpicture}[node distance=2.5cm, auto]
-        % Definisi Node (Kotak-kotak)
-        \node (data) [rectangle, draw, fill=blue!20, text width=4cm, align=center] {Kumpulan Data\\(Dokumen Hukum \& Berita)};
-        
-        \node (proc) [rectangle, draw, fill=orange!20, below of=data, yshift=-0.5cm, text width=4cm, align=center] {Pemrosesan Teks\\\& Pemilihan SLM};
-        
-        \node (chunk) [rectangle, draw, fill=yellow!20, right of=proc, xshift=2cm, text width=3cm, align=center] {Strategi Chunking\\(Ukuran \& Overlap)};
-        
-        \node (index) [rectangle, draw, fill=green!20, below of=chunk, text width=3cm, align=center] {Pengindeksan Vektor\\(Vector DB)};
-        
-        \node (rag) [rectangle, draw, fill=cyan!20, below of=index, text width=3cm, align=center] {Eksekusi RAG\\(Sistem)};
-        
-        \node (eval) [rectangle, draw, draw=red!20, below of=rag, text width=3cm, align=center] {Evaluasi Kinerja\\(Metrik Analisis)};
-        
-        % Definisi Panah (Hubungan)
-        \draw [->, thick] (data) -- (proc);
-        \draw [->, thick] (proc) -- (chunk);
-        \draw [->, thick] (chunk) -- (index);
-        \draw [->, thick] (index) -- (rag);
-        \draw [->, thick] (rag) -- (eval);
-        
-        % Tambahan: Loop Parameter (Opsional untuk menunjukkan perulangan)
-        \node [right of=chunk, xshift=1cm, text width=2.5cm, font=\footnotesize] {9 Konfigurasi\\(3 Size x 3 Overlap)};
-        \draw [dashed, ->] (chunk.east) to [out=180,in=0] (chunk.north west);
-    \end{tikzpicture}
-    \caption{Diagram Alur Penelitian}
-    \label{fig:alur_penelitian}
+	\centering
+	\begin{tikzpicture}[
+		node distance=1.5cm,
+		% Define styles for consistency
+		startstop/.style={trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=2.5cm, text width=2.5cm, text centered, draw=black, fill=blue!20, align=center},
+		process/.style={rectangle, minimum width=3.5cm, text width=3.5cm, text centered, draw=black, fill=orange!20, align=center, minimum height=1cm},
+		loop_process/.style={rectangle, minimum width=3.5cm, text width=3.5cm, text centered, draw=black, align=center, minimum height=1cm},
+		result/.style={trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, text width=3cm, text centered, draw=black, fill=green!20, align=center},
+		arrow/.style={thick, ->, >=Stealth},
+		every node/.style={font=\small}
+		]
+		
+		% --- INPUT NODES ---
+		\node (doc) [startstop] {Dokumen Hukum};
+		\node (news) [startstop, right=of doc] {Artikel Berita};
+		
+		% --- MAIN PROCESS NODES ---
+		% Position 'data' node centered below the two inputs
+		\node (data) [process, below=2cm of $(doc)!0.5!(news)$, fill=blue!20] {Pengumpulan Data};
+		
+		\node (proc) [process, below of=data] {Pemrosesan Teks};
+		
+		% --- ITERATIVE SECTION (The Loop) ---
+		\node (chunk) [loop_process, below of=proc, fill=yellow!20] {Konfigurasi Chunking\\(Ukuran \& Overlap)};
+		\node (index) [loop_process, below of=chunk, fill=cyan!20] {Pengindeksan Vektor\\(Vector DB)};
+		\node (rag) [loop_process, below of=index, fill=cyan!20] {Implementasi Sistem RAG};
+		\node (eval) [loop_process, below of=rag, fill=red!20] {Evaluasi Kinerja};
+		
+		% --- OUTPUT NODE ---
+		\node (output) [result, below of=eval] {Nilai Metrik Akurasi};
+		
+		% --- ARROWS (Flow) ---
+		\draw [arrow] (doc.south) -- ++(0,-0.5) -| (data.north);
+		\draw [arrow] (news.south) -- ++(0,-0.5) -| (data.north);
+		
+		\draw [arrow] (data) -- (proc);
+		\draw [arrow] (proc) -- (chunk);
+		\draw [arrow] (chunk) -- (index);
+		\draw [arrow] (index) -- (rag);
+		\draw [arrow] (rag) -- (eval);
+		\draw [arrow] (eval) -- (output);
+		
+		% --- ITERATION BOX & LOOP ARROW ---
+		% Draw a dashed box around the repeating steps
+		\node [draw, dashed, thick, inner sep=10pt, rounded corners, fit=(chunk)(index)(rag)(eval), label={[font=\footnotesize]right:Iterasi 9 Konfigurasi}] (loop_box) {};
+		
+		% Draw the loop arrow going back from Evaluation to Chunking
+		\draw [dashed, thick, ->, >=Stealth] (eval.east) -- ++(1.5,0) node[midway, right, text width=2cm, align=left, font=\footnotesize] {Parameter\\diubah} |- (chunk.east);
+		
+	\end{tikzpicture}
+	\caption{Diagram Alur Penelitian}
+	\label{fig:alur_penelitian}
 \end{figure}
 
 \subsection{Pengumpulan Data dan Korpus Pengetahuan}
@@ -151,7 +167,7 @@ Dalam penelitian ini, digunakan dua sumber data dokumen utama untuk membentuk Ko
 Untuk mengevaluasi performa dari SLM pada \textit{hardware} dengan sumber daya terbatas namun masih tetap mendapatkan nilai akurasi yang tinggi untuk Bahasa Indonesia, peneliti memilih 3 model dengan ukuran parameter sekitar 3 miliar (3B) yang telah dioptimalkan untuk inferensi khususnya untuk bahasa Indonesia. Model yang dipilih menyeimbangkan kemampuan multibahasa global dengan optimisasi performa bahasa khususnya bahasa-bahasa di Asia Tenggara khususnya Indonesia. Berikut 3 model yang dipilih:
 \begin{itemize}
     \item \textbf{Qwen2.5-3B-Instruct:} Model ini digunakan sebagai \textit{baseline} global multilingual model. Model ini merupakan bagian dari \textit{Qwen2.5} series yang dikembangkan oleh Alibaba. Model ini telah mengalami peningkatan yang signifikan pada tahapan \textit{pre-training} dan \textit{post-training} untuk mendukung lebih dari 29 bahasa, termasuk bahasa Indonesia. Menjadikannya model SLM yang tepat sebagai referensi performa global.
-    \item \textbf{Sailor2-3B-Chat:} Dipilih sebagai representasi dari model yang telah dioptimalkan khususnya untuk bahasa-bahasa di daerah Asia Tenggara. Model ini secara eksplisit mendukung bahasa Inggris, Chinese, dan bahasa-bahasa di Asia Tenggara termasuk bahasa Indonesia, bahkan bahasa Jawa dan Sunda. Hal ini sejalan dengan temuan pada penelitian sebelumnya yang menunjukkan bahwa model yang dioptimalkan untuk bahasa khusus memiliki performa yang lebih baik dibandingkan model multibahasa global \citep{cahyawijaya-etal-2021-indonlg}
+    \item \textbf{Sailor2-3B-Chat:} Dipilih sebagai representasi dari model yang telah dioptimalkan khususnya untuk bahasa-bahasa di daerah Asia Tenggara. Model ini secara eksplisit mendukung bahasa Inggris, Chinese, dan bahasa-bahasa di Asia Tenggara termasuk bahasa Indonesia, bahkan bahasa Jawa dan Sunda. Hal ini sejalan dengan temuan pada penelitian sebelumnya yang menunjukkan bahwa model yang dioptimalkan untuk bahasa khusus memiliki performa yang lebih baik dibandingkan model multibahasa global \citep{cahyawijaya2021indonlg}
     \item \textbf{SEA-LION-v1-3B:} Model ini merupakan bagian dari seri \textit{SEA-LION} yang dirancang untuk mendukung 11 bahasa di Asia Tenggara, khususnya Indonesia, Vietnam, dan Thailand. Peneliti memilih model dengan 3 miliar parameter (3B) untuk menjaga konsistensi dengan model lain yang digunakan dalam eksperimen.
 \end{itemize}
 Dikarenakan penelitian ini memiliki batasan pada sumber daya yang digunakan, ketiga model diatas menggunakan versi \textit{quantized (4-bit atau 8-bit)} untuk memastikan supaya dapat dioperasikan dengan batasan memori yang terbatas (RAM 16GB dan Onboard GPU), sehingga memungkinkan penggunaan model SLM secara lokal tanpa perlu akses ke \textit{cloud computing} berskala enterprise.
@@ -161,7 +177,7 @@ Eksperimen akan dilakukan dengan skema berikut:
     \item \textbf{Konfigurasi Model:} Model akan dijalankan dalam format GGUF (4-bit quantization) agar dapat dimuat sepenuhnya ke dalam RAM 16GB dan berjalan lancar di Onboard GPU (Intel Iris) menggunakan inferensi engine seperti llama.cpp atau Ollama.
 \end{itemize}
 
-\subsection{Strategi Pemotongan Teks (\textit{Chunking}) dan \textit{Overlap}}
+\subsection{Strategi \textit{Chunking} dan \textit{Overlap}}
 Untuk mengatasi batasan panjang konteks (\textit{context window}) pada model SLM dan mengoptimalkan akurasi proses \textit{retrieval}, dokumen dipotong-potong menjadi beberapa bagian teks yang lebih kecil (\textit{chunk}).
 \begin{itemize}
   \item Teknik Pemotongan (\textit{Chunking Strategy}): Metode pemotongan yang idgunakan adalah \textbf{\textit{Fixed-Size Chunking}} dengan pendekatan \textit{Recursive Character Splitter}. Metode ini membagi teks berdasarkan jumlah karakter dengan menghormati batasan semantik alami (seperti paragraf dan kalimat) terlebih dahulu \citep{langchain2025splitter}. Implementasi dalam penelitian ini menggunakan prioritas pemisah ganda pada baris baru (\texttt{\textbackslash n\textbackslash n}), baris baru (\texttt{\textbackslash n}), dan akhirnya spasi.
@@ -198,30 +214,63 @@ Sistem RAG yang dibangun dalam penelitian ini mengadopsi arsitektur standar yang
 \end{itemize}
 
 \begin{figure}[H]
-    \centering
-    \begin{tikzpicture}[node distance=1.5cm, auto]
-
-        \node (user) [draw, ellipse, fill=gray!30] {Pertanyaan (User Query)};
-        
-        \node (embed) [draw, rectangle, fill=blue!10, below of=user] {Model Embedding};
-        
-        \node (db) [draw, cylinder, shape border rotate=90, yshift=-1cm, aspect=0.25, fill=yellow!20, below of=embed] {Vector Database (FAISS)};
-        
-        \node (retr) [draw, rectangle, fill=orange!20, below of=db] {Top-K Retrieval};
-        
-        \node (slm) [draw, rectangle, fill=green!20, below of=retr] {Small Language Model (SLM)};
-        
-        \node (ans) [draw, ellipse, fill=red!20, below of=slm] {Jawaban};
-        
-        % Panah
-        \draw [->, thick] (user) -- (embed);
-        \draw [->, thick] (embed) -- (db);
-        \draw [->, thick] (db) -- (retr);
-        \draw [->, thick] (retr) -- (slm);
-        \draw [->, thick] (slm) -- (ans);
-    \end{tikzpicture}
-    \caption{Arsitektur Sistem RAG}
-    \label{fig:rag_vertical_fixed}
+	\centering
+	\begin{tikzpicture}[
+		node distance=1.5cm,
+		% Define Styles
+		io/.style={trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=2.5cm, text width=2.5cm, text centered, draw=black, fill=blue!20, align=center},
+		process/.style={rectangle, minimum width=3.5cm, text width=3.5cm, text centered, draw=black, fill=orange!20, align=center, minimum height=1cm},
+		db/.style={cylinder, shape border rotate=90, aspect=0.25, minimum height=2.5cm, minimum width=1.5cm, draw=black, fill=yellow!20},
+		arrow/.style={thick, ->, >=Stealth},
+		every node/.style={font=\small}
+		]
+		
+		% --- NODES ---
+		
+		% 1. Input
+		\node (input) [io] {Pertanyaan Pengguna};
+		
+		% 2. Process: Vectorization
+		\node (vectorize) [process, below of=input] {Vektorisasi Pertanyaan};
+		
+		% 3. Process: Retrieval
+		\node (retrieve) [process, below of=vectorize] {Pengambilan Konteks};
+		
+		% 4. Database (Placed on the LEFT to avoid overlap with the loop on the right)
+		\node (db) [db, left of=retrieve, xshift=-5cm] {Basis Data Vektor};
+		
+		% 5. Process: Merging
+		\node (merge) [process, below of=retrieve, fill=cyan!20] {Penggabungan Konteks};
+		
+		% 6. Process: Generation
+		\node (generate) [process, below of=merge, fill=green!20] {Generasi Jawaban};
+		
+		% 7. Output
+		\node (output) [io, below of=generate, fill=gray!20] {Respons Sistem};
+		
+		% --- ARROWS ---
+		
+		% Main Vertical Flow
+		\draw [arrow] (input) -- (vectorize);
+		\draw [arrow] (vectorize) -- (retrieve);
+		\draw [arrow] (retrieve) -- (merge); 
+		\draw [arrow] (merge) -- (generate);
+		\draw [arrow] (generate) -- (output);
+		
+		% Database Interaction (Left Side)
+		% Query Arrow (Retrieve -> DB)
+		\draw [arrow, dashed] (retrieve.north west) -- (db.north east) node[midway, above, font=\footnotesize] {Pencarian};
+		
+		% Result Arrow (DB -> Retrieve) - Straight line to avoid overlap
+		\draw [arrow, dashed] (db.south east) -- (retrieve.south west) node[midway, below, font=\footnotesize] {Hasil};
+		
+		% Input Loop (Right Side)
+		% Path: Input -> Right -> Down -> Left -> Merge
+		\draw [arrow] (input.east) -- ++(2.0,0) |- (merge.east) node[pos=0.25, right, font=\footnotesize] {Pertanyaan Asli};
+		
+	\end{tikzpicture}
+	\caption{Diagram Alur Sistem RAG}
+	\label{fig:rag_flow_refined_v2}
 \end{figure}
 
 \subsection{Data Pertanyaan untuk Evaluasi}
